@@ -24,7 +24,7 @@ def receive_data(conn, addr)
         data = conn.recv(SIZE)
         
   except Exception as e:
-    print("Error: ", e)
+    print(f"Error on conn {addr} : ", e)
 
   finally:
     conn.close()
