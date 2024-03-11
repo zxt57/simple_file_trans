@@ -5,7 +5,7 @@ import time
 IP = socket.gethostname()
 PORT = 5678
 SIZE = 1024
-TIMEOUT = 20
+TIMEOUT = 60
 FORMAT = "utf-8"
 
 def send(filename, file_data):
