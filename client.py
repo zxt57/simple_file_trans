@@ -14,11 +14,11 @@ def send(filename, file_data):
     client = socket.socket()
     client.settimeout(TIMEOUT)
     client.connect((IP,PORT))
-    client.send(filename.encode(FORMAT))
+    client.sendall(filename.encode(FORMAT))
     re_msg = client.recv(SIZE).decode(FORMAT)
     if re_msg != filename:
       raise Exception(f"Received filename {re_msg} different from {filename}")
-    client.send(file_data)
+    client.sendall(file_data)
 
   except Exception as e:
     print("Error : ", e)
@@ -36,4 +36,4 @@ if __name__ == "__main__":
   data = file.read()
   thread_send("test_rec.txt", data)
   file.close()
-  time.sleep(100)
+  time.sleep(60)
