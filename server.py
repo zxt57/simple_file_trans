@@ -17,7 +17,7 @@ def receive_data(conn, addr)
     print(f"Receiving the file : {filename}")
     conn.send(filename.encode(FORMAT))
 
-    with open(filename, 'rw') as f:
+    with open(filename, 'wb') as f:
       data = conn.recv(SIZE)
       while data:
         f.write(data)
