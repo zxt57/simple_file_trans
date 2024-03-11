@@ -3,23 +3,31 @@ import threading
 
 PORT = 5678
 SIZE = 1024
+TIMEOUT = 20
 FORMAT = "utf-8"
 
 def receive_data(conn, addr):
+  
   print(f"{addr} connected.")
+  conn.settimeout(TIMEOUT)
 
-  filename = conn.recv(SIZE).decode(FORMAT)
-  print(f"Receiving the file : {filename}")
-  conn.send(filename.encode(FORMAT))
+  try:
+    filename = conn.recv(SIZE).decode(FORMAT)
+    print(f"Receiving the file : {filename}")
+    conn.send(filename.encode(FORMAT))
 
-  with open(filename, 'w') as f:
-    data = conn.recv(SIZE)
-    while data:
-      f.write(data)
+    with open(filename, 'w') as f:
       data = conn.recv(SIZE)
+      while data:
+        f.write(data)
+        data = conn.recv(SIZE)
+        
+  except Exception as e:
+    print("Error: ",e)
 
-  conn.close()
-  print(f"{addr} disconnected.")
+  finally:
+    conn.close()
+    print(f"{addr} disconnected.")
 
 
 def start_server():
