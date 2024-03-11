@@ -32,7 +32,7 @@ def thread_send(filename, file_data):
   
 
 if __name__ == "__main__":
-  file = open("test_text.txt", "r")
+  file = open("test_text.txt", "rb")
   data = file.read()
   thread_send("test_text.txt", data)
   file.close()
