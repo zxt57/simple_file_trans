@@ -35,7 +35,7 @@ def start_server():
   
   server = socket.socket()
   server.bind((socket.gethostname(),PORT))
-  server.listen(MAX_SOCKET)
+  server.listen(MAX_LISTEN)
   print("Server is listening.")
   
   while True:
