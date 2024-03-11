@@ -1,32 +1,37 @@
 import socket
+import threading
+
 PORT = 5678
 SIZE = 1024
 FORMAT = "utf-8"
 
-def main():
-  print("[STARTING] Server is starting.")
+def receive_data(conn, addr):
+  print(f"{addr} connected.")
+
+  filename = conn.recv(SIZE).decode(FORMAT)
+  print(f"Receiving the file : {filename}")
+  conn.send(filename.encode(FORMAT))
+
+  with open(filename, 'w') as f:
+    data = conn.recv(1024)
+    while data:
+      f.write(data)
+      data = conn.recv(1024)
+
+  conn.close()
+  print(f"{addr} disconnected.")
+
+def start_server():
+  
   server = socket.socket()
   server.bind((socket.gethostname(),PORT))
   server.listen(16)
-  print("[LISTENING] Server is listening.")
+  print("Server is listening.")
+  
   while True:
     conn, addr = server.accept()
-    print(f"[NEW CONNECTION] {addr} connected.")
+    threading.Thread(target=receive_data, args=(conn,addr)).start()
 
-    filename = conn.recv(SIZE).decode(FORMAT)
-    print(f"[RECV] Receiving the filename.")
-    file = open(filename, "w")
-    conn.send("Filename received.".encode(FORMAT))
 
-    data = conn.recv(SIZE).decode(FORMAT)
-    print(f"[RECV] Receiving the file data.")
-    file.write(data)
-    conn.send("File data received".encode(FORMAT))
-
-    file.close()
-
-    conn.close()
-    print(f"[DISCONNECTED] {addr} disconnected.")
-    
 if __name__ == "__main__":
-  main()
+  start_server()
