@@ -4,6 +4,7 @@ import threading
 PORT = 5678
 SIZE = 1024
 TIMEOUT = 20
+MAX_LISTEN = 16
 FORMAT = "utf-8"
 
 def receive_data(conn, addr):
@@ -34,7 +35,7 @@ def start_server():
   
   server = socket.socket()
   server.bind((socket.gethostname(),PORT))
-  server.listen(16)
+  server.listen(MAX_SOCKET)
   print("Server is listening.")
   
   while True:
