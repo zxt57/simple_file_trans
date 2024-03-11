@@ -13,13 +13,14 @@ def receive_data(conn, addr):
   conn.send(filename.encode(FORMAT))
 
   with open(filename, 'w') as f:
-    data = conn.recv(1024)
+    data = conn.recv(SIZE)
     while data:
       f.write(data)
-      data = conn.recv(1024)
+      data = conn.recv(SIZE)
 
   conn.close()
   print(f"{addr} disconnected.")
+
 
 def start_server():
   
