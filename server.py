@@ -7,12 +7,12 @@ TIMEOUT = 20
 MAX_LISTEN = 16
 FORMAT = "utf-8"
 
-def receive_data(conn, addr):
-  
-  print(f"{addr} connected.")
-  conn.settimeout(TIMEOUT)
+def receive_data(conn, addr)
 
   try:
+    print(f"{addr} connected.")
+    conn.settimeout(TIMEOUT)
+    
     filename = conn.recv(SIZE).decode(FORMAT)
     print(f"Receiving the file : {filename}")
     conn.send(filename.encode(FORMAT))
@@ -24,7 +24,7 @@ def receive_data(conn, addr):
         data = conn.recv(SIZE)
         
   except Exception as e:
-    print("Error: ",e)
+    print("Error: ", e)
 
   finally:
     conn.close()
