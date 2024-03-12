@@ -1,6 +1,5 @@
 import socket
 import threading
-import time
 
 IP = socket.gethostname()
 PORT = 5678
@@ -18,6 +17,7 @@ def send(filename, file_data):
     re_msg = client.recv(SIZE).decode(FORMAT)
     if re_msg != filename:
       raise Exception(f"Received filename {re_msg} different from {filename}")
+    print(f"sending file {re_msg}")
     client.sendall(file_data)
 
   except Exception as e:
@@ -36,4 +36,4 @@ if __name__ == "__main__":
   data = file.read()
   thread_send("test_rec.txt", data)
   file.close()
-  time.sleep(60)
+  
