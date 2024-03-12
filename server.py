@@ -7,7 +7,7 @@ TIMEOUT = 20
 MAX_LISTEN = 16
 FORMAT = "utf-8"
 
-def receive_data(conn, addr)
+def receive_data(conn, addr):
 
   try:
     print(f"{addr} connected.")
@@ -42,6 +42,6 @@ def start_server():
     conn, addr = server.accept()
     threading.Thread(target=receive_data, args=(conn,addr)).start()
 
-
-if __name__ == "__main__":
-  start_server()
+# from multiprocessing import Process
+# Process(target=start_server).start()
+start_server()
